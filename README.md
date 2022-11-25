@@ -1,6 +1,6 @@
 # Getting Started with Book Rental App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and created for college purposes.
 
 ## -- How to Run?
 
