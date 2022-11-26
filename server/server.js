@@ -207,3 +207,16 @@ app.delete('/delete-wishlist-book/:wishlist_id', (req, res) => {
         }
     })
 })
+
+// get book data after removal
+app.get('/wishlist/book-data/:book_id', (req, res) => {
+    const id = req.params.book_id;
+    let sql = "SELECT * FROM book WHERE book_id = ?";
+    let query = conn.query(sql, id, (err, results) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(results);
+        }
+    })
+})
