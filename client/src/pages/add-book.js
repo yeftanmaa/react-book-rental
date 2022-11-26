@@ -3,6 +3,7 @@ import Axios from "axios";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import "../global-style.css"
 
 const AddBook = (props) => {
 
@@ -66,7 +67,7 @@ const AddBook = (props) => {
             <div className="global-wrapper">
                 <div className="left-container">
                     <p className="side-text-add-book">You can help others find their book by adding new book into our repository.</p>
-                    <div className="line"></div>
+                    <div className="line" style={{backgroundColor: "white", width: '45px', height: '3px'}}></div>
                 </div>
                 
                 <div className="container-add-book">
