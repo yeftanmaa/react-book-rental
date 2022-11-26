@@ -35,16 +35,19 @@ const Wishlist = (props) => {
                 </div>
                 <div className="card-wrapper">
                     {bookWishList.map((val, i) => {
-                        
+
                         // remove GMT from date info
                         var convertDateStart = new Date(val.dateStart).toISOString().split("T")[0];
                         var convertDateEnd = new Date(val.dateEnd).toISOString().split("T")[0];
 
                         // function when return button clicked
                         const handleReturn = () => {
+
+                            // deleting data from wishlist
                             Axios.delete(`http://localhost:3301/delete-wishlist-book/${val.wishlist_id}`).then(response => {
                                 setBookWishList(response.data);
                             });
+                            
                             window.location.reload(false);
                         }
 

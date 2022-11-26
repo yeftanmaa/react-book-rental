@@ -24,7 +24,7 @@ const SearchBook = (props) => {
 
     // requesting books based on KEYWORD
     useEffect(() => {
-        Axios.get('http://localhost:3301/book/search', { params: { keyword: query }})
+        Axios.get('http://localhost:3301/book/search-title?', { params: { keyword: query }})
         .then(response => {
             setBookList(response.data);
         })
@@ -60,7 +60,6 @@ const SearchBook = (props) => {
     
     // search book through the specific pathname
     useEffect(() => {
-        console.log(redirect);
         Axios.get(`http://localhost:3301` + redirect)
         .then(response => {
             setBookList(response.data);
@@ -71,7 +70,7 @@ const SearchBook = (props) => {
         <div className="container-sm">
 
         <h2 className="title">Showing All Books:</h2>
-        {bookList.map((val) => {
+        {bookList.map((val, i) => {
 
             // function to show deletion modal
             const handleShowModalDelete = () => {
@@ -102,7 +101,7 @@ const SearchBook = (props) => {
             }
 
             return (
-                <div className="card-container">
+                <div className="card-container" key={i}>
                     <div className="img-part">
                         <img src={previewImage} alt="this is a preview for book cover"></img>
                     </div>
@@ -124,9 +123,9 @@ const SearchBook = (props) => {
                             <p className="book-information">Published at: {val.book_publishDate}</p>
                         </div>
                         
-                        <button type="button" class="btn btn-dark" disabled={val.isAvailable === 0 ? true : false}><BookmarkPlusFill style={{width: '17px', height: '17px', marginTop: '-2px', marginRight: '5px'}} /> Add to wishlist</button>
+                        <button type="button" className="btn btn-dark" disabled={val.isAvailable === 0 ? true : false}><BookmarkPlusFill style={{width: '17px', height: '17px', marginTop: '-2px', marginRight: '5px'}} /> Add to wishlist</button>
                         
-                        <p>{val.isAvailable === 0 ? <p className="info">{`Book is reached maximum rent! (Temporarily not available)`}</p> : <p></p>}</p>
+                        <p>{val.isAvailable === 0 ? <span className="info">{`Book is reached maximum rent! (Temporarily not available)`}</span> : <span></span>}</p>
                     </div>
                 </div>
             )
