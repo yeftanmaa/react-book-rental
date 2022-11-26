@@ -1,0 +1,106 @@
+.body {
+    background-color: #2a3fc5;
+    height: 100%;
+    color: white;
+}
+
+.global-container {
+    max-width: 1600px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 100px;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.card {
+    color: black;
+    width: 300px;
+    padding: 15px;
+    position: relative;
+    border: none !important;
+    height: 400px !important;
+}
+
+.sub-text {
+    font-size: 15px;
+    opacity: 0.4;
+    margin-bottom: 5px;
+}
+
+.date-start-text {
+    position: absolute;
+    left: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    bottom: 20px;
+    font-size: 13px;
+    color: green;
+    font-weight: 500;
+}
+
+.date-end-text {
+    position: absolute;
+    left: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    bottom: 0px;
+    font-size: 13px;
+    color: red;
+    font-weight: 500;
+}
+
+.book-description {
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: 0.4;
+    margin-bottom: 10px;
+    position: absolute;
+    left: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    bottom: 80px;
+
+}
+
+.return-btn {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    right: 13px;
+    top: 15px;
+    font-size: 13px;
+}
+
+.number-of-date {
+    margin-bottom: -2px;
+}
+
+.date-remaining {
+    width: fit-content;
+    text-align: left;
+}
+
+.date-remaining p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.line {
+    width: 25px;
+    height: 2px;
+    background-color: rgb(255, 159, 15);
+    margin-bottom: 15px;
+}
+
+.header-component {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}

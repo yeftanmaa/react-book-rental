@@ -9,6 +9,7 @@ import AddBook from './pages/add-book';
 import Login from './pages/login';
 import GetBookAuthor from './pages/get-book-author';
 import GetBookISBN from './pages/get-book-isbn';
+import Wishlist from './pages/wishlist';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/book/status=available' element={<GetBookStatus title="Book Available | Book Rental" />} />
           <Route path='/book/search-author/' element={<GetBookAuthor title="Search Book by Author | Book Rental" />} />
           <Route path='/book/search-isbn/' element={<GetBookISBN title="Search Book by ISBN | Book Rental" />} />
+          <Route path='/wishlist' element={<Wishlist title="My Wishlist | Book Rental" />} />
         </Routes>
       </Router>
     </div>

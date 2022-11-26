@@ -111,6 +111,19 @@ app.get('/book/status', function (req, res) {
     })
 })
 
+// get data based on user wishlist
+app.get('/my-wishlist/', function (req, res, next) {
+    const name = req.query.name;
+    let sql = "SELECT * FROM wishlist WHERE name= ?";
+    let query = conn.query(sql, name, (err, results) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
 // add new data
 app.post('/addBooks',(req, res) => {
     const title = req.body.book_title;
@@ -123,6 +136,24 @@ app.post('/addBooks',(req, res) => {
     let data = {book_title: req.body.book_title, book_author: req.body.book_author, book_publishDate: req.body.book_publishDate, book_ISBN: req.body.book_ISBN, isAvailable: req.body.isAvailable, onBorrow: req.body.onBorrow};
     let sql = "INSERT INTO book (book_title, book_author, book_publishDate, book_ISBN, isAvailable, onBorrow) VALUES (?, ?, ?, ?, ?, ?)";
     let query = conn.query(sql, [title, author, publishdate, isbn, isavailable, onborrow], (err, results) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+// add new data into wishlist table
+app.post('/addToWishlist', (req, res) => {
+    const name = req.body.name;
+    const bookName = req.body.book_name;
+    const bookAuthor = req.body.book_author;
+    const datestart = req.body.dateStart;
+    const dateend = req.body.dateEnd;
+
+    let sql = "INSERT INTO wishlist (name, book_name, book_author, dateStart, dateEnd) VALUES (?, ?, ?, ?, ?)";
+    let query = conn.query(sql, [name, bookName, bookAuthor, datestart, dateend], (err, results) => {
         if (err) {
             console.log(err);
         } else {
@@ -163,3 +194,16 @@ app.delete('/deleteBooks/:book_title',(req, res) => {
     }
   });
 });
+
+// delete book data after removed from wishlist
+app.delete('/delete-wishlist-book/:wishlist_id', (req, res) => {
+    const id = req.params.wishlist_id;
+    let sql = "DELETE FROM wishlist WHERE wishlist_id = ?";
+    let query = conn.query(sql, id, (err, results) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(results);
+        }
+    })
+})
