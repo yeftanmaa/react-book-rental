@@ -8,8 +8,13 @@ import { TrashFill } from "react-bootstrap-icons";
 import ModalDelete from "../components/modals/modal-delete";
 import previewImage from '../assets/images/no-image-placeholder.png';
 import ModalEdit from "../components/modals/modal-edit";
+import { useNavigate } from 'react-router-dom';
+import Wishlist from './wishlist';
 
 const GetAllBook = (props) => {
+
+    // initialize navigation variable
+    const navigate = useNavigate();
 
     // handling dynamic title of this page
     useEffect(() => {
@@ -35,6 +40,9 @@ const GetAllBook = (props) => {
 
     // useState for targeting which data wants to be deleted
     const [target, setTarget] = useState();
+
+    // useState to control wishlist
+    const [wishListClick, setWishlistClick] = useState(false);
 
     // useState for every data field to be edit
     const [getID, setGetID] = useState();
@@ -80,6 +88,39 @@ const GetAllBook = (props) => {
                     window.location.reload(false);
                 }
 
+                // function to handle wishlist
+                const handleWishlist = () => {
+                    setWishlistClick(true);
+
+                    // validate isAvailable if onBorrow reaches 5
+                    var getIsAvailable = val.isAvailable;
+                    var getOnBorrow = val.onBorrow + 1;
+
+                    if (getOnBorrow === 5) {
+                        getIsAvailable = 0;
+                    } else {
+                        getIsAvailable = val.isAvailable;
+                    }
+
+                    // sending form data to backend table wishlist ("db_key", "formValue")
+                    const wishlistData = {"name": "alimc23", "book_name": val.book_title, "book_author": val.book_author, "dateStart": "2022-08-20", "dateEnd": "2022-09-20"};
+                    Axios.post("http://localhost:3301/addToWishlist", wishlistData).then(() => alert('Added to wishlist!'));
+
+                    // update isAvailable and onBorrow value of clicked book
+                    Axios.put(`http://localhost:3301/editBooks/${val.book_id}`, {
+                        book_title: val.book_title,
+                        book_author: val.book_author,
+                        book_publishDate: val.book_publishDate,
+                        book_ISBN: val.book_ISBN,
+                        isAvailable: getIsAvailable,
+                        onBorrow: getOnBorrow
+                    });
+
+                    navigate('/wishlist', {
+                        state:{bookTitle: val.book_title, bookAuthor: val.book_author, bookISBN: val.book_ISBN}
+                    });
+                }
+
                 return (
                     <div className="card-container">
                         <div className="img-part">
@@ -103,8 +144,9 @@ const GetAllBook = (props) => {
                                 <p className="book-information">Published at: {val.book_publishDate}</p>
                             </div>
                             
-                            <button type="button" className="btn btn-dark" disabled={val.isAvailable === 0 ? true : false}><BookmarkPlusFill style={{width: '17px', height: '17px', marginTop: '-2px', marginRight: '5px'}} /> Add to wishlist</button>
-                            
+                            <button type="button" className="btn btn-dark" disabled={val.isAvailable === 0 ? true : false} onClick={handleWishlist}><BookmarkPlusFill style={{width: '17px', height: '17px', marginTop: '-2px', marginRight: '5px'}} /> Add to wishlist</button>
+                            {wishListClick && <Wishlist state={val.book_title} />}
+
                             <p>{val.isAvailable === 0 ? <p className="info">{`Book is reached maximum rent! (Temporarily not available)`}</p> : <p></p>}</p>
                         </div>
                     </div>
